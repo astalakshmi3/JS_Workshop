@@ -66,6 +66,9 @@ if (searchInput) {
 }
 
 // Category Filters
+// find all the check boxes with the class "category-filter" and add an event listener to each one that listens for changes. When a change occurs, it collects the active categories and filters the products accordingly, then re-renders the product grid.
+const categoryFilters = document.querySelectorAll('.category-filter');
+
 categoryFilters.forEach(filter => {
     filter.addEventListener('change', () => {
         // TODO: Collect active categories
@@ -74,6 +77,12 @@ categoryFilters.forEach(filter => {
             .filter(f => f.checked)
             .map(f => f.value);
 
+        if ( checkedCategories.length === 0 ||
+            checkedCategories.includes("All products"))
+        {
+            renderProducts(products);
+            return;
+        }
         const filteredProducts = products.filter(product =>
             activeCategories.length === 0 || activeCategories.includes(product.category)
         );
