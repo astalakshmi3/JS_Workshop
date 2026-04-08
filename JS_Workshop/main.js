@@ -57,6 +57,11 @@ if (searchInput) {
     searchInput.addEventListener('input', (e) => {
         // TODO: Filter products by name or description
         const searchTerm = e.target.value.toLowerCase();
+        if (searchTerm === "")
+        {
+            renderProducts(products);
+            return;
+        }
         const filteredProducts = products.filter(product =>
             product.name.toLowerCase().includes(searchTerm) ||
             product.description.toLowerCase().includes(searchTerm)
@@ -66,8 +71,6 @@ if (searchInput) {
 }
 
 // Category Filters
-// find all the check boxes with the class "category-filter" and add an event listener to each one that listens for changes. When a change occurs, it collects the active categories and filters the products accordingly, then re-renders the product grid.
-const categoryFilters = document.querySelectorAll('.category-filter');
 
 categoryFilters.forEach(filter => {
     filter.addEventListener('change', () => {
