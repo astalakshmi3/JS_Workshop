@@ -29,12 +29,22 @@ renderProducts(products);   // function called
     // TODO: Generate HTML for each product card
     // TODO: Append to productGrid
 function addToCart(productId) {
-    const foundProduct = products.find(p => p.id === productId);
-    if (foundProduct) {
+    const foundProduct = products.find(p => p.id === productId);// find the product
+    onclick = "addToCart(${product.id})"  // add to cart button in the product card
+
+    if (foundProduct) { // add to cart
         cart.push(foundProduct);
         localStorage.setItem('cart', JSON.stringify(cart));  // save cart to localStorage
         updateCartCount();  // update cart count UI
     }
+    if (foundProduct)
+    {
+        cart.push(foundProduct);
+       localStorage.setItem('cart', JSON.stringify(cart));  // save cart to localStorage
+        updateCartCount();  // update cart count UI
+        showToast(`${foundProduct.name} added to cart!`);
+    }
+    alert("Added to cart");
 }
 
 // 5. Update Cart Count UI
@@ -43,6 +53,8 @@ function addToCart(productId) {
     // TODO: Generate HTML for each product card
     // TODO: Append to productGrid
 function updateCartCount() {
+    if (! cartCount) return;
+
     cartCount.textContent = cart.length;  // updates the number in the cart icon
     if (cart.length > 0) {
         cartCount.style.display = "inline-block";
@@ -68,6 +80,7 @@ if (searchInput) {
         );
         renderProducts(filteredProducts);
     });
+
 }
 
 // Category Filters
@@ -129,4 +142,19 @@ function createProductCard(product) {
             </div>
         </div>
     `;
+}
+
+// 9. Add toast message
+function showToast (message)
+{
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    toast.className = 'toast';
+    toast.style.position = "fixed";
+    toast.style.bottom = "20px";
+    toast.style.color = "#fff";
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
 }
